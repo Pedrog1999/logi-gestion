@@ -15,3 +15,10 @@ si no cambian los puertos  probar:
 
 
 SI llegan a cambiar algo del .env, hagan docker compose down y vuelvan a levantar la imagen con el up --build
+
+
+------- 0 -------
+
+docker compose exec back php spark migrate
+
+migrations de user hecha para probar, funciona y ya está en master, con ese comando la corren dentro del contenedor
