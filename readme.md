@@ -13,3 +13,5 @@ si no cambian los puertos  probar:
 - Back: http://localhost:8000
 - phpMyAdmin: http://localhost:8080 (user: root, pass: la del .env)
 
+
+SI llegan a cambiar algo del .env, hagan docker compose down y vuelvan a levantar la imagen con el up --build
