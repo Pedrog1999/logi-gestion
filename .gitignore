@@ -1,0 +1,19 @@
+# Env
+.env
+
+# Front (React)
+front/node_modules/
+front/dist/
+
+# Back (PHP CodeIgniter)
+back/vendor/
+back/writable/logs/*
+back/writable/cache/*
+back/writable/session/*
+
+# Docker
+docker-compose.override.yml
+
+# Generales
+.DS_Store
+*.log
