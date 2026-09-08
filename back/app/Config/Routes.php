@@ -1,6 +1,1 @@
-<?php
-
-use CodeIgniter\Router\RouteCollection;
-
-/** @var RouteCollection $routes */
-$routes->get('/', 'Home::index');
+<?php namespace Config; $routes = Services::routes(); $routes->setDefaultNamespace('App\Controllers'); $routes->setDefaultController('Home'); $routes->setDefaultMethod('index'); $routes->get('api/test', 'Api\TestController::index'); $routes->get('/', 'Home::index');

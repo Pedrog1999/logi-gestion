@@ -1,0 +1,92 @@
+.testimonials {
+  padding: 80px 20px;
+  background: white;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.title {
+  font-size: 42px;
+  font-weight: 800;
+  color: #1E5A9C;
+  margin-bottom: 15px;
+}
+
+.highlight {
+  color: #3E8FD6;
+}
+
+.subtitle {
+  font-size: 18px;
+  color: #3E8FD6;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 30px;
+}
+
+.card {
+  padding: 30px;
+  background: #EAF6FF;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: #7FC4F2;
+  box-shadow: 0 10px 40px rgba(62, 143, 214, 0.1);
+}
+
+.rating {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.text {
+  font-size: 16px;
+  color: #1E5A9C;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.author {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.avatar {
+  font-size: 40px;
+}
+
+.name {
+  margin: 0;
+  color: #1E5A9C;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.role {
+  margin: 0;
+  color: #3E8FD6;
+  font-size: 14px;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 32px;
+  }
+}

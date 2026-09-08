@@ -1,0 +1,181 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(30, 90, 156, 0.1);
+  z-index: 1000;
+  padding: 0 20px;
+  border-bottom: 2px solid #BFE3FA;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 70px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+
+.logoIcon {
+  font-size: 28px;
+}
+
+.logoText {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1E5A9C;
+}
+
+.logoAccent {
+  color: #3E8FD6;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navLinks li a {
+  text-decoration: none;
+  color: #1E5A9C;
+  font-weight: 500;
+  font-size: 16px;
+  transition: color 0.3s ease;
+  position: relative;
+}
+
+.navLinks li a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #3E8FD6;
+  transition: width 0.3s ease;
+}
+
+.navLinks li a:hover {
+  color: #3E8FD6;
+}
+
+.navLinks li a:hover::after {
+  width: 100%;
+}
+
+.authButtons {
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  padding: 8px 20px;
+  border: none;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btnLogin {
+  background: transparent;
+  color: #1E5A9C;
+  border: 2px solid #3E8FD6;
+}
+
+.btnLogin:hover {
+  background: #BFE3FA;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(62, 143, 214, 0.3);
+}
+
+.btnRegister {
+  background: linear-gradient(135deg, #3E8FD6, #1E5A9C);
+  color: white;
+  border: 2px solid #3E8FD6;
+}
+
+.btnRegister:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(62, 143, 214, 0.4);
+  background: linear-gradient(135deg, #4a9fe6, #2a6aac);
+}
+
+.menuButton {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.menuButton span {
+  width: 25px;
+  height: 3px;
+  background: #1E5A9C;
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.menuButton.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 6px);
+}
+
+.menuButton.active span:nth-child(2) {
+  opacity: 0;
+}
+
+.menuButton.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -6px);
+}
+
+@media (max-width: 768px) {
+  .menuButton {
+    display: flex;
+  }
+
+  .navLinks {
+    position: absolute;
+    top: 70px;
+    left: 0;
+    right: 0;
+    background: white;
+    flex-direction: column;
+    padding: 20px;
+    gap: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transform: translateY(-120%);
+    transition: transform 0.4s ease;
+    border-bottom: 3px solid #BFE3FA;
+  }
+
+  .navLinks.open {
+    transform: translateY(0);
+  }
+
+  .authButtons {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+    text-align: center;
+  }
+}

@@ -26,12 +26,12 @@ class Database extends Config
      */
     public array $default = [
         'DSN'          => '',
-        'hostname'     => 'localhost',
-        'username'     => '',
-        'password'     => '',
-        'database'     => '',
-        'DBDriver'     => 'MySQLi',
-        'DBPrefix'     => '',
+        'hostname'     => 'localhost',      // ✅ Servidor de BD (cambiar si es remoto)
+        'username'     => 'root',           // ✅ Usuario de BD (XAMPP usa 'root')
+        'password'     => 'root',           // ✅ Contraseña de BD (XAMPP usa '' o 'root')
+        'database'     => 'transportgo_db', // ✅ Nombre de tu base de datos
+        'DBDriver'     => 'MySQLi',         // ✅ Driver de MySQL
+        'DBPrefix'     => '',               // ✅ Prefijo para tablas (opcional)
         'pConnect'     => false,
         'DBDebug'      => true,
         'charset'      => 'utf8mb4',
@@ -41,7 +41,7 @@ class Database extends Config
         'compress'     => false,
         'strictOn'     => false,
         'failover'     => [],
-        'port'         => 3306,
+        'port'         => 3306,             // ✅ Puerto de MySQL (XAMPP usa 3306)
         'numberNative' => false,
         'foundRows'    => false,
         'dateFormat'   => [
@@ -53,8 +53,7 @@ class Database extends Config
 
     //    /**
     //     * Sample database connection for SQLite3.
-    //     *
-    //     * @var array<string, mixed>
+    //     * (Comentado - no usar)
     //     */
     //    public array $default = [
     //        'database'    => 'database.db',
@@ -75,8 +74,7 @@ class Database extends Config
 
     //    /**
     //     * Sample database connection for Postgre.
-    //     *
-    //     * @var array<string, mixed>
+    //     * (Comentado - no usar)
     //     */
     //    public array $default = [
     //        'DSN'        => '',
@@ -102,8 +100,7 @@ class Database extends Config
 
     //    /**
     //     * Sample database connection for SQLSRV.
-    //     *
-    //     * @var array<string, mixed>
+    //     * (Comentado - no usar)
     //     */
     //    public array $default = [
     //        'DSN'        => '',
@@ -130,14 +127,7 @@ class Database extends Config
 
     //    /**
     //     * Sample database connection for OCI8.
-    //     *
-    //     * You may need the following environment variables:
-    //     *   NLS_LANG                = 'AMERICAN_AMERICA.UTF8'
-    //     *   NLS_DATE_FORMAT         = 'YYYY-MM-DD HH24:MI:SS'
-    //     *   NLS_TIMESTAMP_FORMAT    = 'YYYY-MM-DD HH24:MI:SS'
-    //     *   NLS_TIMESTAMP_TZ_FORMAT = 'YYYY-MM-DD HH24:MI:SS'
-    //     *
-    //     * @var array<string, mixed>
+    //     * (Comentado - no usar)
     //     */
     //    public array $default = [
     //        'DSN'        => 'localhost:1521/FREEPDB1',
@@ -165,15 +155,15 @@ class Database extends Config
     public array $tests = [
         'DSN'         => '',
         'hostname'    => '127.0.0.1',
-        'username'    => '',
-        'password'    => '',
-        'database'    => ':memory:',
-        'DBDriver'    => 'SQLite3',
-        'DBPrefix'    => 'db_',  // Needed to ensure we're working correctly with prefixes live. DO NOT REMOVE FOR CI DEVS
+        'username'    => 'root',
+        'password'    => 'root',
+        'database'    => 'transportgo_test', // ✅ Base de datos para pruebas
+        'DBDriver'    => 'MySQLi',            // ✅ Cambiado a MySQLi
+        'DBPrefix'    => 'db_',
         'pConnect'    => false,
         'DBDebug'     => true,
-        'charset'     => 'utf8',
-        'DBCollat'    => '',
+        'charset'     => 'utf8mb4',
+        'DBCollat'    => 'utf8mb4_general_ci',
         'swapPre'     => '',
         'encrypt'     => false,
         'compress'    => false,

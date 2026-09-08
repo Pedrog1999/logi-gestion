@@ -1,0 +1,1 @@
+<?php namespace App\Controllers\Api; use CodeIgniter\RESTful\ResourceController; class TestController extends ResourceController { public function index() { return $this->respond(['status' => 'success', 'message' => 'API funcionando']); } }

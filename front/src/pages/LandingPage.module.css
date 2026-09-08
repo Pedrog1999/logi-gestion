@@ -1,0 +1,60 @@
+.landingPage {
+  min-height: 100vh;
+  background-color: #EAF6FF;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.landingPage::-webkit-scrollbar {
+  width: 10px;
+}
+
+.landingPage::-webkit-scrollbar-track {
+  background: #EAF6FF;
+}
+
+.landingPage::-webkit-scrollbar-thumb {
+  background: #3E8FD6;
+  border-radius: 5px;
+}
+
+.landingPage::-webkit-scrollbar-thumb:hover {
+  background: #1E5A9C;
+}
+
+.landingPage section {
+  opacity: 0;
+  animation: fadeInUp 0.8s ease forwards;
+}
+
+.landingPage section:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.landingPage section:nth-child(2) {
+  animation-delay: 0.3s;
+}
+
+.landingPage section:nth-child(3) {
+  animation-delay: 0.5s;
+}
+
+.landingPage section:nth-child(4) {
+  animation-delay: 0.7s;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .landingPage {
+    font-size: 14px;
+  }
+}
