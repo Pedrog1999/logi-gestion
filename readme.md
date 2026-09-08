@@ -23,4 +23,8 @@ docker compose exec back php spark migrate
 
 migrations de user hecha para probar, funciona y ya está en master, con ese comando la corren dentro del contenedor
 
-TIP ---> para que no haya ningun conflicto, siempre , SIEMPRE antes de trabajar, hagan git pull y traiganse todo lo de master, y después ese comando, por si hubo una migración. 
+
+docker-compose exec back sh
+
+composer install
+
