@@ -1,12 +1,5 @@
-import React from 'react';
-import LandingPage from './pages/LandingPage';
+import AppRouter from './shared/routes/AppRouter';
 
-function App() {
-  return (
-    <div className="App">
-      <LandingPage />
-    </div>
-  );
+export default function App() {
+  return <AppRouter />;
 }
-
-export default App;
