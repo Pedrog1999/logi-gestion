@@ -4,9 +4,9 @@
   justify-content: space-between;
   padding: 0 1.5rem;
   height: 64px;
-  background-color: #1f2937;
-  color: #fff;
-  border-bottom: 1px solid #374151;
+  background-color: var(--color-rich-mahogany-dark);
+  color: var(--color-text);
+  border-bottom: 3px solid var(--color-brown-red);
 }
 
 .left,
@@ -20,9 +20,11 @@
   justify-content: flex-end;
 }
 
-.logo {
-  height: 40px;
-  width: auto;
+.brand {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: 0.5px;
 }
 
 .nav {
@@ -34,18 +36,32 @@
 .link {
   padding: 0.5rem 1rem;
   border-radius: 6px;
-  color: #d1d5db;
+  color: var(--color-text-muted);
   text-decoration: none;
   font-weight: 500;
   transition: background-color 0.2s, color 0.2s;
 }
 
 .link:hover {
-  background-color: #374151;
-  color: #fff;
+  background-color: var(--color-black-cherry);
+  color: var(--color-text);
 }
 
 .active {
-  background-color: #2563eb;
-  color: #fff;
+  background-color: var(--color-brown-red);
+  color: var(--color-text);
+}
+
+.loginBtn {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  background-color: var(--color-brown-red);
+  color: var(--color-text);
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.loginBtn:hover {
+  background-color: var(--color-dark-wine);
 }

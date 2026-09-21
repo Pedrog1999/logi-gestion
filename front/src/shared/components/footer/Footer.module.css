@@ -4,8 +4,8 @@
   justify-content: center;
   height: 48px;
   padding: 0 1.5rem;
-  background-color: #1f2937;
-  color: #9ca3af;
+  background-color: var(--color-rich-mahogany-dark);
+  color: var(--color-text-muted);
   font-size: 0.875rem;
-  border-top: 1px solid #374151;
+  border-top: 3px solid var(--color-brown-red);
 }

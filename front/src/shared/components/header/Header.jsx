@@ -1,6 +1,5 @@
-import { NavLink } from 'react-router-dom';
-import logo from '../../assets/logo.png';
-import styles from './Header.module.css';
+import { NavLink, Link } from 'react-router-dom';
+import styles from '../header/Header.module.css';
 
 const NAV_ITEMS = [
   { to: '/companies', label: 'Empresas' },
@@ -13,7 +12,7 @@ export default function Header() {
   return (
     <header className={styles.header}>
       <div className={styles.left}>
-        <img src={logo} alt="Logo" className={styles.logo} />
+        <span className={styles.brand}>LogiGestión</span>
       </div>
 
       <nav className={styles.nav}>
@@ -31,7 +30,9 @@ export default function Header() {
       </nav>
 
       <div className={styles.right}>
-        {/* Aquí luego irá el usuario logueado, logout, etc. */}
+        <Link to="/login" className={styles.loginBtn}>
+          Iniciar sesión
+        </Link>
       </div>
     </header>
   );
