@@ -45,4 +45,3 @@ final class Load
         return $this->updatedAt;
     }
 }
-

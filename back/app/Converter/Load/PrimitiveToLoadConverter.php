@@ -3,7 +3,7 @@
 namespace App\Converter\Load;
 
 use DateTime;
-use App\Entity\Load;
+use App\Entity\Load\Load;
 
 final class PrimitiveToLoadConverter {
     public function convert(object $primitive): Load

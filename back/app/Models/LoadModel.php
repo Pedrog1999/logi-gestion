@@ -6,7 +6,7 @@ use Config\Database;
 use CodeIgniter\Database\BaseConnection;
 use App\Entity\Load;
 
-final class LoadsModel
+final class LoadModel
 {
     private BaseConnection $database;
 
@@ -51,4 +51,3 @@ final class LoadsModel
         $this->database->query($query, [$id]);
     }
 }
-
