@@ -1,0 +1,42 @@
+.page {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.header h1 {
+  margin: 0;
+  color: var(--color-rich-mahogany-dark);
+}
+
+.newBtn {
+  padding: 0.6rem 1.1rem;
+  background-color: var(--color-brown-red);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.newBtn:hover {
+  background-color: var(--color-dark-wine);
+}
+
+.info {
+  text-align: center;
+  padding: 2rem;
+  color: #6b7280;
+}
+
+.error {
+  text-align: center;
+  padding: 2rem;
+  color: var(--color-brown-red);
+}
