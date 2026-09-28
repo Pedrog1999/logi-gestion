@@ -6,7 +6,7 @@ use App\Converter\Load\LoadToLoadResponseConverter;
 use App\Dto\Request\Load\LoadRequest;
 use App\Dto\Response\Load\LoadResponse;
 use App\Models\LoadModel;
-use App\Entity\Load;
+use App\Entity\Load\Load;
 
 final class LoadUpdaterService {
     private LoadModel $loadModel;
@@ -21,23 +21,18 @@ final class LoadUpdaterService {
 
     public function update(LoadRequest $request, int $id): LoadResponse
     {
-        $load = $this->loadFinderService->find($id);
+        $existingLoad = $this->loadFinderService->find($id);
         
-        $this->loadModel->update(
+        $loadToUpdate = new Load(
+            $existingLoad->getId(),
             $request->getType(),
             $request->getName(),
             $request->getCommission(),
-            $load->getId()
+            $existingLoad->getCreatedAt(),
+            $existingLoad->getUpdatedAt()
         );
 
-        $updatedLoad = new Load(
-            $load->getId(),
-            $request->getType(),
-            $request->getName(),
-            $request->getCommission(),
-            $load->getCreatedAt(),
-            $load->getUpdatedAt()
-        );
+        $updatedLoad = $this->loadModel->update($loadToUpdate);
 
         return $this->converter->convert($updatedLoad);
     }

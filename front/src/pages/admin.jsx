@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './admin.module.css';
+import CargasSection from '../components/CargasSection';
 
 const SECTIONS = [
   {
@@ -29,8 +30,8 @@ const SECTIONS = [
   {
     id: 'cargas',
     label: 'Cargas',
-    description: 'Cargas asociadas a los viajes.',
-    columns: ['ID', 'Descripción', 'Peso', 'Viaje', 'Estado'],
+    description: 'Tipos de carga y sus comisiones asociadas.',
+    columns: ['ID', 'Tipo', 'Nombre', 'Comisión'],
   },
   {
     id: 'empresas',
@@ -44,6 +45,80 @@ const Admin = () => {
   const [activeSection, setActiveSection] = useState('usuarios');
 
   const current = SECTIONS.find((s) => s.id === activeSection);
+
+  const renderDefaultSection = () => (
+    <>
+      <header className={styles.topbar}>
+        <div>
+          <h1 className={styles.pageTitle}>{current.label}</h1>
+          <p className={styles.pageDescription}>{current.description}</p>
+        </div>
+
+        <div className={styles.topbarActions}>
+          <button type="button" className={styles.secondaryBtn}>
+            Exportar
+          </button>
+          <button type="button" className={styles.primaryBtn}>
+            Nuevo
+          </button>
+        </div>
+      </header>
+
+      <section className={styles.content}>
+        <div className={styles.toolbar}>
+          <input
+            type="text"
+            placeholder={`Buscar en ${current.label.toLowerCase()}...`}
+            className={styles.searchInput}
+          />
+          <select className={styles.filterSelect}>
+            <option>Todos los estados</option>
+          </select>
+        </div>
+
+        <div className={styles.tableWrapper}>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                {current.columns.map((col) => (
+                  <th key={col}>{col}</th>
+                ))}
+                <th className={styles.actionsCol}>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td colSpan={current.columns.length + 1} className={styles.emptyState}>
+                  Todavía no hay registros para mostrar.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <footer className={styles.pagination}>
+          <span className={styles.paginationInfo}>0 resultados</span>
+          <div className={styles.paginationControls}>
+            <button type="button" className={styles.pageBtn} disabled>
+              Anterior
+            </button>
+            <button type="button" className={styles.pageBtn} disabled>
+              Siguiente
+            </button>
+          </div>
+        </footer>
+      </section>
+    </>
+  );
+
+  const renderSection = () => {
+    switch (activeSection) {
+      case 'cargas':
+        return <CargasSection />;
+      default:
+        return renderDefaultSection();
+    }
+  };
 
   return (
     <div className={styles.layout}>
@@ -69,69 +144,10 @@ const Admin = () => {
       </aside>
 
       <div className={styles.main}>
-        <header className={styles.topbar}>
-          <div>
-            <h1 className={styles.pageTitle}>{current.label}</h1>
-            <p className={styles.pageDescription}>{current.description}</p>
-          </div>
-
-          <div className={styles.topbarActions}>
-            <button type="button" className={styles.secondaryBtn}>
-              Exportar
-            </button>
-            <button type="button" className={styles.primaryBtn}>
-              Nuevo
-            </button>
-          </div>
-        </header>
-
-        <section className={styles.content}>
-          <div className={styles.toolbar}>
-            <input
-              type="text"
-              placeholder={`Buscar en ${current.label.toLowerCase()}...`}
-              className={styles.searchInput}
-            />
-            <select className={styles.filterSelect}>
-              <option>Todos los estados</option>
-            </select>
-          </div>
-
-          <div className={styles.tableWrapper}>
-            <table className={styles.table}>
-              <thead>
-                <tr>
-                  {current.columns.map((col) => (
-                    <th key={col}>{col}</th>
-                  ))}
-                  <th className={styles.actionsCol}>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td colSpan={current.columns.length + 1} className={styles.emptyState}>
-                    Todavía no hay registros para mostrar.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <footer className={styles.pagination}>
-            <span className={styles.paginationInfo}>0 resultados</span>
-            <div className={styles.paginationControls}>
-              <button type="button" className={styles.pageBtn} disabled>
-                Anterior
-              </button>
-              <button type="button" className={styles.pageBtn} disabled>
-                Siguiente
-              </button>
-            </div>
-          </footer>
-        </section>
+        {renderSection()}
       </div>
     </div>
   );
 };
 
-export default Admin;
+export default Admin;

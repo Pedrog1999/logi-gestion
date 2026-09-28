@@ -5,7 +5,7 @@ namespace App\Services\Load;
 use App\Converter\Load\LoadToLoadResponseConverter;
 use App\Dto\Request\Load\LoadRequest;
 use App\Dto\Response\Load\LoadResponse;
-use App\Entity\Load;
+use App\Entity\Load\Load;
 use App\Models\LoadModel;
 
 final class LoadCreatorService {
@@ -20,19 +20,15 @@ final class LoadCreatorService {
 
     public function create(LoadRequest $request): LoadResponse
     {
-        $id = $this->loadModel->insert(
-            $request->getType(),
-            $request->getName(),
-            $request->getCommission()
-        );
-
         $load = new Load(
-            $id,
+            null,
             $request->getType(),
             $request->getName(),
             $request->getCommission()
         );
 
-        return $this->converter->convert($load);
+        $insertedLoad = $this->loadModel->insert($load);
+
+        return $this->converter->convert($insertedLoad);
     }
 }

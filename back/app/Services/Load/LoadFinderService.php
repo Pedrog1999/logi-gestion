@@ -4,7 +4,7 @@ namespace App\Services\Load;
 
 use App\Converter\Load\LoadToLoadResponseConverter;
 use App\Dto\Response\Load\LoadResponse;
-use App\Entity\Load;
+use App\Entity\Load\Load;
 use App\Models\LoadModel;
 use App\Exception\Load\LoadNotFoundException;
 

@@ -13,6 +13,10 @@ $routes->get('api/test', 'Api\TestController::index');
 
 // Rutas REST para el módulo Load
 $routes->group('api', function ($routes) {
+    $routes->options('load', static function () {});
+    $routes->options('loads', static function () {});
+    $routes->options('load/(:num)', static function () {});
+
     $routes->post('load', 'Load\LoadPostController::do');
     $routes->get('loads', 'Load\LoadsGetController::do');
     $routes->get('load/(:num)', 'Load\LoadGetController::do/$1');
