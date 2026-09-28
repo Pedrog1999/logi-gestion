@@ -2,84 +2,66 @@
 
 namespace App\Services;
 
-use App\Converters\UserConverter;
 use App\DTO\Request\LoginRequest;
-use App\DTO\Request\RegisterRequest;
-use App\DTO\Response\AuthResponse;
-use App\DTO\Response\UserResponse;
+use App\Entities\UserEntity;
+use App\Exceptions\InactiveUserException;
+use App\Exceptions\InvalidCredentialsException;
 use App\Exceptions\UnauthorizedException;
 use App\Models\UserModel;
+use App\Security\JwtService;
+use App\Security\PasswordHasher;
 
-final class AuthService
+class AuthService
 {
-    public function __construct(
-        private UserService $users = new UserService(),
-        private TokenService $tokens = new TokenService(),
-        private UserModel $model = new UserModel(),
-    ) {}
+    private UserModel $userModel;
+    private PasswordHasher $hasher;
+    private JwtService $jwt;
 
-    public function register(RegisterRequest $req): AuthResponse
+    public function __construct(UserModel $userModel, PasswordHasher $hasher, JwtService $jwt)
     {
-        $user  = $this->users->create($req);
-        $token = $this->tokens->issue($user, true);
-
-        return new AuthResponse(
-            UserConverter::toResponse($user),
-            $token['token'],
-            $token['expiresAt'],
-        );
+        $this->userModel = $userModel;
+        $this->hasher    = $hasher;
+        $this->jwt       = $jwt;
     }
 
-    public function login(LoginRequest $req): AuthResponse
+    /** Valida usuario + clave y que la cuenta esté activa. */
+    public function login(LoginRequest $request): UserEntity
     {
-        $user = $this->model->findByEmail($req->email);
+        $user = $this->userModel->findByUsername($request->getUsername());
 
-        // mismo mensaje para email inexistente y password incorrecta
-        if (! $user || ! $user->verifyPassword($req->password)) {
-            throw new UnauthorizedException('Email o contraseña incorrectos');
+        // Mismo error si no existe o si la clave no coincide
+        if ($user === null || ! $this->hasher->verify($request->getPassword(), $user->getPassword())) {
+            throw new InvalidCredentialsException();
         }
 
-        $token = $this->tokens->issue($user, $req->remember);
+        if (! $user->isActive()) {
+            throw new InactiveUserException();
+        }
 
-        return new AuthResponse(
-            UserConverter::toResponse($user),
-            $token['token'],
-            $token['expiresAt'],
-        );
+        return $user;
     }
 
-    public function me(array $payload): UserResponse
+    public function generateToken(UserEntity $user): string
     {
-        return $this->users->getById((int)$payload['sub']);
+        return $this->jwt->generate($user);
     }
 
-    /** Emite uno nuevo y revoca el actual */
-    public function refresh(array $payload, ?string $currentToken): AuthResponse
+    public function getTokenTtl(): int
     {
-        $user  = $this->users->getEntity((int)$payload['sub']);
-        $token = $this->tokens->rotate($user, $currentToken, true);
-
-        return new AuthResponse(
-            UserConverter::toResponse($user),
-            $token['token'],
-            $token['expiresAt'],
-        );
+        return $this->jwt->getTtl();
     }
 
-    /** Logout real: el token queda muerto en la base */
-    public function logout(?string $currentToken): void
+    /** Valida el token y verifica en BD que el usuario siga existiendo y activo. */
+    public function authenticateToken(string $token): UserEntity
     {
-        $this->tokens->revoke($currentToken);
-    }
+        $payload = $this->jwt->decode($token);
+        $userId  = isset($payload['sub']) ? (int) $payload['sub'] : 0;
+        $user    = $userId > 0 ? $this->userModel->find($userId) : null;
 
-    /** Cierra todas las demás sesiones, deja viva la actual */
-    public function logoutAll(array $payload): void
-    {
-        $this->tokens->revokeAll((int)$payload['sub'], (int)($payload['tid'] ?? 0) ?: null);
-    }
+        if ($user === null || ! $user->isActive()) {
+            throw new UnauthorizedException('Sesión inválida', 'session_invalid');
+        }
 
-    public function sessions(array $payload): array
-    {
-        return $this->tokens->activeSessions((int)$payload['sub']);
+        return $user;
     }
 }

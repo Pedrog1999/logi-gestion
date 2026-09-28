@@ -2,80 +2,46 @@
 
 namespace App\Controllers\Api;
 
+use App\Converters\UserConverter;
 use App\DTO\Request\LoginRequest;
-use App\DTO\Request\RegisterRequest;
+use App\DTO\Response\LoginResponse;
 use App\Services\AuthService;
-use App\Services\TokenService;
 use CodeIgniter\HTTP\ResponseInterface;
 
-class AuthController extends BaseApiController
+class AuthController extends ApiController
 {
-    private AuthService $auth;
+    private AuthService $authService;
 
     public function __construct()
     {
-        $this->auth = new AuthService();
+        $this->authService = service('authService');
     }
 
-    /** POST /api/auth/register */
-    public function register(): ResponseInterface
-    {
-        return $this->handle(function () {
-            $dto = RegisterRequest::fromArray($this->body());
-            return $this->ok($this->auth->register($dto), 'Cuenta creada', 201);
-        });
-    }
-
-    /** POST /api/auth/login */
     public function login(): ResponseInterface
     {
         return $this->handle(function () {
-            $dto = LoginRequest::fromArray($this->body());
-            return $this->ok($this->auth->login($dto), 'Sesión iniciada');
+            $payload = $this->getPayload();
+            $this->validatePayload($payload, LoginRequest::rules());
+
+            $user = $this->authService->login(LoginRequest::fromArray($payload));
+
+            $response = new LoginResponse(
+                $this->authService->generateToken($user),
+                'Bearer',
+                $this->authService->getTokenTtl(),
+                UserConverter::toResponse($user)
+            );
+
+            return $this->success($response->toArray());
         });
     }
 
-    /** GET /api/auth/me  [auth] */
     public function me(): ResponseInterface
     {
-        return $this->handle(fn () => $this->ok($this->auth->me($this->auth())));
-    }
-
-    /** POST /api/auth/refresh  [auth] */
-    public function refresh(): ResponseInterface
-    {
-        return $this->handle(fn () => $this->ok(
-            $this->auth->refresh($this->auth(), $this->rawToken()),
-            'Token renovado'
-        ));
-    }
-
-    /** POST /api/auth/logout  [auth] */
-    public function logout(): ResponseInterface
-    {
         return $this->handle(function () {
-            $this->auth->logout($this->rawToken());
-            return $this->ok(null, 'Sesión cerrada');
+            $user = service('currentUser')->getOrFail();
+
+            return $this->success(UserConverter::toResponse($user)->toArray());
         });
-    }
-
-    /** POST /api/auth/logout-all  [auth] */
-    public function logoutAll(): ResponseInterface
-    {
-        return $this->handle(function () {
-            $this->auth->logoutAll($this->auth());
-            return $this->ok(null, 'Se cerraron las demás sesiones');
-        });
-    }
-
-    /** GET /api/auth/sessions  [auth] */
-    public function sessions(): ResponseInterface
-    {
-        return $this->handle(fn () => $this->ok($this->auth->sessions($this->auth())));
-    }
-
-    private function rawToken(): ?string
-    {
-        return $this->request->getHeaderLine(TokenService::HEADER) ?: null;
     }
 }

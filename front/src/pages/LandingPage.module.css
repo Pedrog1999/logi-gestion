@@ -1,60 +1,179 @@
-.landingPage {
+.page {
   min-height: 100vh;
-  background-color: #EAF6FF;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #FFFFFF;
+  color: #0F1A2B;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+.card {
+  width: 100%;
+  max-width: 400px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 40px 32px;
+  box-shadow:
+    0 24px 80px rgba(0, 0, 0, 0.55),
+    0 0 0 1px rgba(255, 255, 255, 0.06);
+  position: relative;
+  z-index: 9999;   /* ← antes 10, ahora 9999 para descartar */
+}
+/* Grid sutil de fondo */
+.grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgba(30, 90, 156, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(30, 90, 156, 0.05) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse at 50% 40%, black 20%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at 50% 40%, black 20%, transparent 70%);
+  pointer-events: none;
 }
 
-.landingPage::-webkit-scrollbar {
-  width: 10px;
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 40px;
+  position: relative;
+  z-index: 1;
 }
 
-.landingPage::-webkit-scrollbar-track {
-  background: #EAF6FF;
+.brand {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: #0F1A2B;
 }
 
-.landingPage::-webkit-scrollbar-thumb {
-  background: #3E8FD6;
-  border-radius: 5px;
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  margin: 0 auto;
+  width: 100%;
 }
 
-.landingPage::-webkit-scrollbar-thumb:hover {
+.eyebrow {
+  display: inline-block;
+  font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #1E5A9C;
+  background: rgba(62, 143, 214, 0.08);
+  padding: 6px 12px;
+  border-radius: 999px;
+  margin-bottom: 32px;
+}
+
+.title {
+  font-size: clamp(40px, 6vw, 72px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.035em;
+  margin: 0 0 24px;
+  color: #0F1A2B;
+}
+
+.titleAccent {
+  color: #1E5A9C;
+}
+
+.lead {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #4b5563;
+  margin: 0 0 48px;
+  max-width: 480px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.primaryBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #0F1A2B;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 14px 24px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.05s ease;
+}
+
+.primaryBtn:hover {
   background: #1E5A9C;
 }
 
-.landingPage section {
-  opacity: 0;
-  animation: fadeInUp 0.8s ease forwards;
+.primaryBtn:active {
+  transform: translateY(1px);
 }
 
-.landingPage section:nth-child(1) {
-  animation-delay: 0.1s;
+.arrow {
+  font-size: 16px;
+  transition: transform 0.2s ease;
+  display: inline-block;
 }
 
-.landingPage section:nth-child(2) {
-  animation-delay: 0.3s;
+.primaryBtn:hover .arrow {
+  transform: translateX(3px);
 }
 
-.landingPage section:nth-child(3) {
-  animation-delay: 0.5s;
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 24px;
+  font-size: 12px;
+  color: #9aa0ac;
+  font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  position: relative;
+  z-index: 1;
 }
 
-.landingPage section:nth-child(4) {
-  animation-delay: 0.7s;
+.dot {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: #9aa0ac;
 }
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+@media (max-width: 640px) {
+  .header {
+    padding: 20px 20px;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-@media (max-width: 768px) {
-  .landingPage {
-    font-size: 14px;
+  .main {
+    padding: 32px 24px;
+  }
+
+  .lead {
+    font-size: 15px;
+  }
+
+  .primaryBtn {
+    padding: 13px 20px;
+    font-size: 13px;
   }
 }

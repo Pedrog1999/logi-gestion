@@ -17,15 +17,25 @@ class CreateUsersTable extends Migration
             ],
             'username' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '100',
+                'constraint' => 100,
             ],
             'email' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '150',
+                'constraint' => 150,
             ],
             'password' => [
                 'type'       => 'VARCHAR',
-                'constraint' => '255',
+                'constraint' => 255,
+            ],
+            'role' => [
+                'type'       => 'ENUM',
+                'constraint' => ['admin', 'user'],
+                'default'    => 'user',
+            ],
+            'active' => [
+                'type'       => 'TINYINT',
+                'constraint' => 1,
+                'default'    => 1,
             ],
             'created_at' => [
                 'type' => 'DATETIME',
@@ -45,6 +55,6 @@ class CreateUsersTable extends Migration
 
     public function down()
     {
-        $this->forge->dropTable('users');
+        $this->forge->dropTable('users', true);
     }
 }

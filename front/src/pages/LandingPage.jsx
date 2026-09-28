@@ -1,42 +1,49 @@
-import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styles from './LandingPage.module.css';
-import Navbar from '../components/Navbar/Navbar.jsx';  // ← .jsx
-import Hero from '../components/Hero/Hero.jsx';        // ← .jsx
-import Features from '../components/Features/Features.jsx'; // ← .jsx
-import About from '../components/About/About.jsx';     // ← .jsx
-import Testimonials from '../components/Testimonials/Testimonials.jsx'; // ← .jsx
-import Footer from '../components/Footer/Footer.jsx';  // ← .jsx
-import Modal from '../components/Modal/Modal.jsx';     // ← .jsx
 
 const LandingPage = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalType, setModalType] = useState('login');
-
-  const openModal = (type) => {
-    setModalType(type);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
+  const navigate = useNavigate();
 
   return (
-    <div className={styles.landingPage}>
-      <Navbar onOpenModal={openModal} />
-      <main>
-        <Hero />
-        <Features />
-        <About />
-        <Testimonials />
+    <div className={styles.page}>
+      <div className={styles.grid} aria-hidden="true" />
+
+      <header className={styles.header}>
+        <span className={styles.brand}>LogiGestión</span>
+      </header>
+
+      <main className={styles.main}>
+        <span className={styles.eyebrow}>Panel de administración</span>
+
+        <h1 className={styles.title}>
+          Gestión de logística
+          <br />
+          <span className={styles.titleAccent}>sin fricción.</span>
+        </h1>
+
+        <p className={styles.lead}>
+          Usuarios, choferes, viajes y cargas en un solo lugar.
+          <br />
+          Sin hojas de cálculo. Sin planillas perdidas.
+        </p>
+
+        <div className={styles.actions}>
+          <button
+            type="button"
+            className={styles.primaryBtn}
+            onClick={() => navigate('/login')}
+          >
+            Acceder al panel
+            <span className={styles.arrow}>→</span>
+          </button>
+        </div>
       </main>
-      <Footer />
-      <Modal 
-        isOpen={isModalOpen} 
-        onClose={closeModal} 
-        type={modalType}
-        onSwitchType={openModal}
-      />
+
+      <footer className={styles.footer}>
+        <span>© {new Date().getFullYear()} LogiGestión</span>
+        <span className={styles.dot} />
+        <span>v1.0</span>
+      </footer>
     </div>
   );
 };
