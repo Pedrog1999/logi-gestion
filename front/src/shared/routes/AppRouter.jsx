@@ -1,4 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+
+import LandingPage from '../../pages/LandingPage';
+import Login from '../../pages/login';
+import Admin from '../../pages/admin';
+import PrivateRoute from '../routes/PrivateRoute';
+
 import MainLayout from '../../layouts/MainLayout';
 
 import LoginPage from '../../features/auth/LoginPage';
@@ -16,7 +22,7 @@ export default function AppRouter() {
     <BrowserRouter>
       <Routes>
 
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login" element={<Login />} />
 
         <Route element={<MainLayout />}>
           <Route path="/companies" element={<CompanyListPage />} />
@@ -32,6 +38,17 @@ export default function AppRouter() {
         </Route>
 
         <Route path="/" element={<Navigate to="/companies" replace />} />
+
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoute>
+              <Admin />
+            </PrivateRoute>
+          }
+        />
+
+        <Route path="*" element={<Navigate to="/" replace />} />
 
       </Routes>
     </BrowserRouter>

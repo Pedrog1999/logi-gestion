@@ -4,27 +4,44 @@ namespace Config;
 
 use CodeIgniter\Router\RouteCollection;
 
-/**
- * @var RouteCollection $routes
- */
-
+/** @var RouteCollection $routes */
 $routes = Services::routes();
 
 $routes->setDefaultNamespace('App\Controllers');
 $routes->setDefaultController('Home');
 $routes->setDefaultMethod('index');
 
-// Ruta principal
-$routes->get('/', 'Home::index');
+$routes->setAutoRoute(false);
 
-// Rutas de prueba
+// Ruta de test que ya tenías
 $routes->get('api/test', 'Api\TestController::index');
 
-// Rutas de drivers
-$routes->group('api', function ($routes) {
-    $routes->get('drivers', 'Api\DriversController::index');
-    $routes->get('drivers/(:num)', 'Api\DriversController::show/$1');
-    $routes->post('drivers', 'Api\DriversController::create');
-    $routes->put('drivers/(:num)', 'Api\DriversController::update/$1');
-    $routes->delete('drivers/(:num)', 'Api\DriversController::delete/$1');
+// Home
+$routes->get('/', 'Home::index');
+
+// ---------- API ----------
+$routes->group('api', ['namespace' => 'App\Controllers\Api'], static function (RouteCollection $routes) {
+
+    // Preflight CORS (el filtro 'cors' responde antes de llegar acá)
+    $routes->options('(:any)', static function () {
+    });
+
+    // Público
+    $routes->post('auth/login', 'AuthController::login', ['filter' => 'throttle']);
+
+    // Autenticado
+    $routes->get('auth/me', 'AuthController::me', ['filter' => 'auth']);
+
+    // Solo admin (el orden importa: primero auth, después admin)
+$routes->group('users', static function (RouteCollection $routes) {
+    // Lectura: cualquier autenticado
+    $routes->get('', 'UserController::index', ['filter' => 'auth']);
+    $routes->get('(:num)', 'UserController::show/$1', ['filter' => 'auth']);
+
+    // Escritura: solo admin
+    $routes->post('', 'UserController::create', ['filter' => ['auth', 'admin']]);
+    $routes->patch('(:num)', 'UserController::update/$1', ['filter' => ['auth', 'admin']]);
+    $routes->delete('(:num)', 'UserController::deactivate/$1', ['filter' => ['auth', 'admin']]);
+    $routes->patch('(:num)/activate', 'UserController::activate/$1', ['filter' => ['auth', 'admin']]);
+});
 });
