@@ -54,4 +54,12 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], static function (R
             $routes->put('(:num)', 'Driver\DriverPutController::put/$1');
             $routes->delete('(:num)', 'Driver\DriverDeleteController::do/$1');
     });
+        // companies
+    $routes->group('companies', function ($routes) {
+        $routes->get('', 'Company\CompaniesGetController::search');
+        $routes->get('(:num)', 'Company\CompanyGetController::find/$1');
+        $routes->post('', 'Company\CompanyPostController::create');
+        $routes->put('(:num)', 'Company\CompanyPutController::put/$1');
+        $routes->delete('(:num)', 'Company\CompanyDeleteController::do/$1');
+    });
 });
