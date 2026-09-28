@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { userService } from '../services/UserService';
 import { ApiError } from '../services/api';
 import styles from './admin.module.css';
+import CargasSection from '../components/CargasSection';
 
 const SECTIONS = [
   {
@@ -33,8 +34,8 @@ const SECTIONS = [
   {
     id: 'cargas',
     label: 'Cargas',
-    description: 'Cargas asociadas a los viajes.',
-    columns: ['ID', 'Descripción', 'Peso', 'Viaje', 'Estado'],
+    description: 'Tipos de carga y sus comisiones asociadas.',
+    columns: ['ID', 'Tipo', 'Nombre', 'Comisión'],
   },
   {
     id: 'empresas',

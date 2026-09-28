@@ -62,4 +62,13 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], static function (R
         $routes->put('(:num)', 'Company\CompanyPutController::put/$1');
         $routes->delete('(:num)', 'Company\CompanyDeleteController::do/$1');
     });
+    $routes->options('load', static function () {});
+    $routes->options('loads', static function () {});
+    $routes->options('load/(:num)', static function () {});
+
+    $routes->post('load', 'Load\LoadPostController::do');
+    $routes->get('loads', 'Load\LoadsGetController::do');
+    $routes->get('load/(:num)', 'Load\LoadGetController::do/$1');
+    $routes->put('load/(:num)', 'Load\LoadPutController::do/$1');
+    $routes->delete('load/(:num)', 'Load\LoadDeleteController::do/$1');
 });
