@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateConductoresTable extends Migration
+class CreateDriversTable extends Migration
 {
     public function up()
     {
@@ -15,11 +15,11 @@ class CreateConductoresTable extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'nombre' => [
+            'first_name' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],
-            'apellido' => [
+            'last_name' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],
@@ -27,18 +27,19 @@ class CreateConductoresTable extends Migration
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
                 'unique'     => true,
-            ],
-            'telefono' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '20',
                 'null'       => true,
             ],
-            'licencia' => [
+            'phone' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '50',
                 'null'       => true,
             ],
-            'activo' => [
+            'license' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '50',
+                'null'       => true,
+            ],
+            'active' => [
                 'type'       => 'TINYINT',
                 'constraint' => 1,
                 'default'    => 1,
@@ -53,11 +54,11 @@ class CreateConductoresTable extends Migration
             ],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->createTable('conductores');
+        $this->forge->createTable('drivers');
     }
 
     public function down()
     {
-        $this->forge->dropTable('conductores');
+        $this->forge->dropTable('drivers');
     }
 }

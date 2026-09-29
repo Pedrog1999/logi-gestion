@@ -33,15 +33,42 @@ $routes->group('api', ['namespace' => 'App\Controllers\Api'], static function (R
     $routes->get('auth/me', 'AuthController::me', ['filter' => 'auth']);
 
     // Solo admin (el orden importa: primero auth, después admin)
-$routes->group('users', static function (RouteCollection $routes) {
-    // Lectura: cualquier autenticado
-    $routes->get('', 'UserController::index', ['filter' => 'auth']);
-    $routes->get('(:num)', 'UserController::show/$1', ['filter' => 'auth']);
+    $routes->group('users', static function (RouteCollection $routes) {
+        // Lectura: cualquier autenticado
+        $routes->get('', 'UserController::index', ['filter' => 'auth']);
+        $routes->get('(:num)', 'UserController::show/$1', ['filter' => 'auth']);
 
-    // Escritura: solo admin
-    $routes->post('', 'UserController::create', ['filter' => ['auth', 'admin']]);
-    $routes->patch('(:num)', 'UserController::update/$1', ['filter' => ['auth', 'admin']]);
-    $routes->delete('(:num)', 'UserController::deactivate/$1', ['filter' => ['auth', 'admin']]);
-    $routes->patch('(:num)/activate', 'UserController::activate/$1', ['filter' => ['auth', 'admin']]);
-});
+        // Escritura: solo admin
+        $routes->post('', 'UserController::create', ['filter' => ['auth', 'admin']]);
+        $routes->patch('(:num)', 'UserController::update/$1', ['filter' => ['auth', 'admin']]);
+        $routes->delete('(:num)', 'UserController::deactivate/$1', ['filter' => ['auth', 'admin']]);
+        $routes->patch('(:num)/activate', 'UserController::activate/$1', ['filter' => ['auth', 'admin']]);
+
+        
+    });
+        // ---- Drivers ----
+        $routes->group('drivers', function ($routes) {
+            $routes->get('', 'Driver\DriversGetController::search');
+            $routes->get('(:num)', 'Driver\DriverGetController::find/$1');
+            $routes->post('', 'Driver\DriverPostController::create');
+            $routes->put('(:num)', 'Driver\DriverPutController::put/$1');
+            $routes->delete('(:num)', 'Driver\DriverDeleteController::do/$1');
+    });
+        // companies
+    $routes->group('companies', function ($routes) {
+        $routes->get('', 'Company\CompaniesGetController::search');
+        $routes->get('(:num)', 'Company\CompanyGetController::find/$1');
+        $routes->post('', 'Company\CompanyPostController::create');
+        $routes->put('(:num)', 'Company\CompanyPutController::put/$1');
+        $routes->delete('(:num)', 'Company\CompanyDeleteController::do/$1');
+    });
+    $routes->options('load', static function () {});
+    $routes->options('loads', static function () {});
+    $routes->options('load/(:num)', static function () {});
+
+    $routes->post('load', 'Load\LoadPostController::do');
+    $routes->get('loads', 'Load\LoadsGetController::do');
+    $routes->get('load/(:num)', 'Load\LoadGetController::do/$1');
+    $routes->put('load/(:num)', 'Load\LoadPutController::do/$1');
+    $routes->delete('load/(:num)', 'Load\LoadDeleteController::do/$1');
 });

@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateViajesTable extends Migration
+class CreateCompaniesTable extends Migration
 {
     public function up()
     {
@@ -15,31 +15,24 @@ class CreateViajesTable extends Migration
                 'unsigned'       => true,
                 'auto_increment' => true,
             ],
-            'origen' => [
+            'name' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
             ],
-            'destino' => [
-                'type'       => 'VARCHAR',
-                'constraint' => '255',
-            ],
-            'estado' => [
-                'type'       => 'ENUM',
-                'constraint' => ['Pendiente', 'En curso', 'Finalizado', 'Cancelado'],
-                'default'    => 'Pendiente',
-            ],
-            'conductor' => [
+            'email' => [
                 'type'       => 'VARCHAR',
                 'constraint' => '255',
                 'null'       => true,
             ],
-            'fecha_salida' => [
-                'type' => 'DATETIME',
-                'null' => true,
+            'phone' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '50',
+                'null'       => true,
             ],
-            'fecha_llegada' => [
-                'type' => 'DATETIME',
-                'null' => true,
+            'address' => [
+                'type'       => 'VARCHAR',
+                'constraint' => '255',
+                'null'       => true,
             ],
             'created_at' => [
                 'type' => 'DATETIME',
@@ -51,11 +44,11 @@ class CreateViajesTable extends Migration
             ],
         ]);
         $this->forge->addKey('id', true);
-        $this->forge->createTable('viajes');
+        $this->forge->createTable('companies');
     }
 
     public function down()
     {
-        $this->forge->dropTable('viajes');
+        $this->forge->dropTable('companies');
     }
 }
